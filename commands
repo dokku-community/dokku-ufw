@@ -40,9 +40,6 @@ ports:open <app>                                open all ports belonging to <app
 ports:close <app>                               close all ports belonging to <app>
 EOF
     ;;
-  *)
-    "$0" ports:help
-  ;;
 esac
 
 IFS="$OLDIFS"
