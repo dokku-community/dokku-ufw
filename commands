@@ -3,7 +3,7 @@ set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
 
 if [ $# -ne 2 ] && [ "$1" != "ports:help" ]
 then
-  echo "Usage: $(basename $0) SUBCOMMAND APP_NAME"
+  "$0" ports:help
   exit 1
 fi
 
@@ -33,11 +33,16 @@ case "$SUBCOMMAND" in
     ;;
   ports:help)
     cat<<EOF
-    ports <app>                                     show all ports belonging to <app>
-    ports:open <app>                                open all ports belonging to <app>
-    ports:close <app>                               close all ports belonging to <app>
+Usage: $(basename "$0") SUBCOMMAND APP_NAME
+Available subcommands:
+ports <app>                                     show all ports belonging to <app>
+ports:open <app>                                open all ports belonging to <app>
+ports:close <app>                               close all ports belonging to <app>
 EOF
     ;;
+  *)
+    "$0" ports:help
+  ;;
 esac
 
 IFS="$OLDIFS"
