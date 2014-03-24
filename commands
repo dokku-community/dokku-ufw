@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
 
-if [ $# -ne 2 ] && [ "$1" != "help" ]
+if [ $# -ne 2 ] && [ "$1" != "ports:help" ]
 then
   echo "Usage: $(basename $0) SUBCOMMAND APP_NAME"
   exit 1
