@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
+
+if [ $# -ne 2 ] && [ "$1" != "help" ]
+then
+  echo "Usage: `basename $0` SUBCOMMAND APP_NAME"
+  exit 1
+fi
+
+OLDIFS="$IFS"
+IFS=" "
+SUBCOMMAND="$1"
+APP=app/"$2":latest
+
+case "$1" in
+  ports)
+    INSTANCES=$(docker ps | grep "$APP" | cut -d\  -f1 | tr '\n' ' ')
+    for i in $INSTANCES; do
+      docker inspect "$i" | grep HostPort | cut -d\" -f4 || true 
+    done | uniq
+    ;;
+  help)
+    cat<<EOF
+    ports <app>                                     show all ports belonging to <app>
+EOF
+    ;;
+esac
+
+IFS="$OLDIFS"
