@@ -10,5 +10,5 @@ This plugin assumes two things:
 ## Installation
 
     cd /var/lib/dokku/plugins
-    sudo git clone 
+    sudo git clone git@github.com:heichblatt/dokku-ports.git
     sudo dokku plugins-install
