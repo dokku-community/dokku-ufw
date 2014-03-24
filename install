@@ -6,3 +6,4 @@ echo installing dokku-printport
 cat > /etc/sudoers.d/dokku-ufw <<EOF
 %dokku ALL=(ALL) NOPASSWD: /usr/sbin/ufw
 EOF
+chmod 0440 /etc/sudoers.d/dokku-ufw
