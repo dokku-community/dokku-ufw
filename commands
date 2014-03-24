@@ -25,10 +25,17 @@ case "$1" in
       sudo ufw allow "$p"/tcp > /dev/null 2>&1 && echo OK || echo ERROR;
     done
     ;;
+  ports:close)
+    for p in $("$0" ports "$2") ; do
+      echo -n "closing $p/tcp .. ";
+      sudo ufw delete allow "$p"/tcp > /dev/null 2>&1 && echo OK || echo ERROR;
+    done
+    ;;
   help)
     cat<<EOF
     ports <app>                                     show all ports belonging to <app>
     ports:open <app>                                open all ports belonging to <app>
+    ports:close <app>                               close all ports belonging to <app>
 EOF
     ;;
 esac
