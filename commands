@@ -3,7 +3,7 @@ set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
 
 if [ $# -ne 2 ] && [ "$1" != "help" ]
 then
-  echo "Usage: `basename $0` SUBCOMMAND APP_NAME"
+  echo "Usage: $(basename $0) SUBCOMMAND APP_NAME"
   exit 1
 fi
 
@@ -12,7 +12,7 @@ IFS=" "
 SUBCOMMAND="$1"
 APP=app/"$2":latest
 
-case "$1" in
+case "$SUBCOMMAND" in
   ports)
     INSTANCES=$(docker ps | grep "$APP" | cut -d\  -f1 | tr '\n' ' ')
     for i in $INSTANCES; do
