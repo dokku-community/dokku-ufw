@@ -33,11 +33,9 @@ case "$SUBCOMMAND" in
     ;;
   help)
    cat && cat<<EOF
-Usage: $(basename "$0") SUBCOMMAND APP_NAME
-Available subcommands:
-ports <app>                                     show all ports belonging to <app>
-ports:open <app>                                open all ports belonging to <app>
-ports:close <app>                               close all ports belonging to <app>
+    ports <app>                                     show all ports belonging to <app>
+    ports:open <app>                                open all ports belonging to <app>
+    ports:close <app>                               close all ports belonging to <app>
 EOF
     ;;
 esac
