@@ -32,7 +32,7 @@ case "$SUBCOMMAND" in
     done
     ;;
   ports:help)
-    cat<<EOF
+   cat && cat<<EOF
 Usage: $(basename "$0") SUBCOMMAND APP_NAME
 Available subcommands:
 ports <app>                                     show all ports belonging to <app>
