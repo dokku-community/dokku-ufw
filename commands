@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
 
-if [ $# -ne 2 ] && [ "$1" != "ports:help" ]
+if [ $# -ne 2 ] && [ "$1" != "help" ]
 then
   "$0" ports:help
   exit 1
