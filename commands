@@ -31,7 +31,7 @@ case "$SUBCOMMAND" in
       sudo ufw delete allow "$p"/tcp > /dev/null 2>&1 && echo OK || echo ERROR;
     done
     ;;
-  ports:help)
+  help)
    cat && cat<<EOF
 Usage: $(basename "$0") SUBCOMMAND APP_NAME
 Available subcommands:
