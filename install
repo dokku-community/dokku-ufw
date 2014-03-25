@@ -2,7 +2,7 @@
 
 set -e
 
-echo installing dokku-printport
+echo installing dokku-ports
 cat > /etc/sudoers.d/dokku-ufw <<EOF
 %dokku ALL=(ALL) NOPASSWD: /usr/sbin/ufw
 EOF
