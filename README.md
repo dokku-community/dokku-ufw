@@ -12,3 +12,17 @@ This plugin assumes two things:
     cd /var/lib/dokku/plugins
     sudo git clone git@github.com:heichblatt/dokku-ports.git
     sudo dokku plugins-install
+
+## Usage
+
+* Show all ports belonging to <app>
+
+    ports <app>
+
+* Close all ports belonging to <app>
+
+    ports:close <app>
+
+* Open all ports belonging to <app>
+
+    ports:open <app> 
