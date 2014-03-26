@@ -11,7 +11,7 @@ This plugin assumes two things:
 
 ```bash
 cd /var/lib/dokku/plugins
-sudo git clone git@github.com:heichblatt/dokku-ports.git
+sudo git clone git@github.com:heichblatt/dokku-ports.git ports
 sudo dokku plugins-install
 ```
 
