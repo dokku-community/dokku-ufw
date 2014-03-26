@@ -15,14 +15,17 @@ This plugin assumes two things:
 
 ## Usage
 
-* Show all ports belonging to <app>
+Show all ports belonging to <app>
+```bash
+ports <app>
+```
 
-    ports <app>
+Close all ports belonging to <app>
+```bash
+ports:close <app>
+```
 
-* Close all ports belonging to <app>
-
-    ports:close <app>
-
-* Open all ports belonging to <app>
-
-    ports:open <app> 
+Open all ports belonging to <app>
+```bash
+ports:open <app>
+```
