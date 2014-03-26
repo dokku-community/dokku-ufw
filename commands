@@ -3,7 +3,7 @@ set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
 
 if [ $# -ne 2 ] && [ "$1" != "help" ]
 then
-  "$0" ports:help
+  "$0" help
   exit 1
 fi
 
@@ -14,7 +14,7 @@ APP=app/"$2":latest
 
 case "$SUBCOMMAND" in
   ports)
-    INSTANCES=$(docker ps | grep "$APP" | cut -d\  -f1 | tr '\n' ' ')
+    INSTANCES=$(docker ps | grep "$APP" | grep -v CONTAINER | cut -d\  -f1 | tr '\n' ' ')
     for i in $INSTANCES; do
       docker inspect "$i" | grep HostPort | cut -d\" -f4 || true 
     done | uniq
