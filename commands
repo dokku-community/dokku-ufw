@@ -1,16 +1,15 @@
 #!/usr/bin/env bash
 set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
 
-if [ $# -ne 2 ] && [ "$1" != "help" ]
-then
-  "$0" help
-  exit 1
-fi
-
 OLDIFS="$IFS"
 IFS=" "
 SUBCOMMAND="$1"
 APP=app/"$2":latest
+
+if [ $# -ne 2 ] && [ "$1" != "help" ]
+then
+  SUBCOMMAND=help
+fi
 
 case "$SUBCOMMAND" in
   ports)
