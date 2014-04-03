@@ -17,17 +17,17 @@ sudo dokku plugins-install
 
 ## Usage
 
-Show all ports belonging to <app>
+Show all ports belonging to app
 ```bash
 ports <app>
 ```
 
-Close all ports belonging to <app>
+Close all ports belonging to app
 ```bash
 ports:close <app>
 ```
 
-Open all ports belonging to <app>
+Open all ports belonging to app
 ```bash
 ports:open <app>
 ```
