@@ -5,7 +5,7 @@ OLDIFS="$IFS"
 IFS=" "
 SUBCOMMAND="$1"
 export NAMESPACE=${NAMESPACE:="dokku"}
-APP="$NAMSPACE/$2":latest
+APP="$NAMESPACE/$2":latest
 
 if [ $# -ne 2 ] && [ "$1" != "help" ]
 then
