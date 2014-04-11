@@ -4,7 +4,8 @@ set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
 OLDIFS="$IFS"
 IFS=" "
 SUBCOMMAND="$1"
-APP=app/"$2":latest
+export NAMESPACE=${NAMESPACE:="dokku"}
+APP="$NAMSPACE/$2":latest
 
 if [ $# -ne 2 ] && [ "$1" != "help" ]
 then
