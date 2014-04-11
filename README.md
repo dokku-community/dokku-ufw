@@ -31,3 +31,10 @@ Open all ports belonging to app
 ```bash
 ports:open <app>
 ```
+
+## Hooks
+
+This plugin provides hooks:
+
+* post-deploy: open ports for app
+* pre-delete: close ports for app
