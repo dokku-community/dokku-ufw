@@ -3,9 +3,3 @@ set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
 APP="$1"; PORT="$2"
 
 dokku ports:close "$APP"
-if [[ $? != 0 ]] ; then
-	echo Error closing port "$PORT" for "$APP".
-	exit 1
-else
-	echo Closed port "$PORT" for app "$APP".
-fi

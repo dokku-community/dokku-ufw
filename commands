@@ -21,13 +21,13 @@ case "$SUBCOMMAND" in
     ;;
   ports:open)
     for p in $("$0" ports "$2") ; do
-      echo -n "opening $p/tcp .. ";
+      printf "Opening port $p/tcp .. ";
       sudo ufw allow "$p"/tcp > /dev/null 2>&1 && echo OK || echo ERROR;
     done
     ;;
   ports:close)
     for p in $("$0" ports "$2") ; do
-      echo -n "closing $p/tcp .. ";
+      printf "Closing port $p/tcp .. ";
       sudo ufw delete allow "$p"/tcp > /dev/null 2>&1 && echo OK || echo ERROR;
     done
     ;;
