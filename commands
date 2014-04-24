@@ -7,25 +7,28 @@ SUBCOMMAND="$1"
 export NAMESPACE=${NAMESPACE:="dokku"}
 APP="$NAMESPACE/$2":latest
 
-if [ $# -ne 2 ] && [ "$1" != "help" ]
+if [ $# -lt 1 ] && [ "$1" != "help" ]
 then
   SUBCOMMAND=help
 fi
 
 case "$SUBCOMMAND" in
   ports)
+    [[ $# -ne 2 ]] && echo Wrong number of command line arguments.
     INSTANCES=$(docker ps | grep "$APP" | grep -v CONTAINER | cut -d\  -f1 | tr '\n' ' ')
     for i in $INSTANCES; do
       docker inspect "$i" | grep HostPort | cut -d\" -f4 || true 
     done | uniq
     ;;
   ports:open)
+    [[ $# -ne 2 ]] && echo Wrong number of command line arguments.
     for p in $("$0" ports "$2") ; do
       echo "Opened port $p/tcp.";
       sudo ufw allow "$p"/tcp > /dev/null 2>&1
     done
     ;;
   ports:close)
+    [[ $# -ne 2 ]] && echo Wrong number of command line arguments.
     for p in $("$0" ports "$2") ; do
       echo "Closed port $p/tcp.";
       sudo ufw delete allow "$p"/tcp > /dev/null 2>&1
