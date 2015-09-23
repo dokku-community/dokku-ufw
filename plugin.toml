@@ -1,0 +1,4 @@
+[plugin]
+description = "open and close your dokku app's ports"
+version = "1.0.0"
+[plugin.config]

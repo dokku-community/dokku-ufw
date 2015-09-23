@@ -3,40 +3,49 @@ set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
 
 OLDIFS="$IFS"
 IFS=" "
-SUBCOMMAND="$1"
 export NAMESPACE=${NAMESPACE:="dokku"}
 APP="$NAMESPACE/$2":latest
 
-if [ $# -ne 2 ] && [ "$1" != "help" ]
-then
-  SUBCOMMAND=help
-fi
-
-case "$SUBCOMMAND" in
+case "$1" in
   ports)
     INSTANCES=$(docker ps | grep "$APP" | grep -v CONTAINER | cut -d\  -f1 | tr '\n' ' ')
     for i in $INSTANCES; do
-      docker inspect "$i" | grep HostPort | cut -d\" -f4 || true 
+      docker inspect "$i" | grep HostPort | cut -d\" -f4 || true
     done | uniq
     ;;
+
   ports:open)
+    dokku_log_info1_quiet "Opening ports"
     for p in $("$0" ports "$2") ; do
-      printf "Opening port $p/tcp .. ";
+      dokku_log_verbose_quiet "Opening port $p/tcp .. "
       sudo ufw allow "$p"/tcp > /dev/null 2>&1 && echo OK || echo ERROR;
     done
     ;;
+
   ports:close)
+    dokku_log_info1_quiet "Closing ports"
     for p in $("$0" ports "$2") ; do
-      printf "Closing port $p/tcp .. ";
+      dokku_log_verbose_quiet "Closing port $p/tcp .. "
       sudo ufw delete allow "$p"/tcp > /dev/null 2>&1 && echo OK || echo ERROR;
     done
     ;;
-  help)
-   cat && cat<<EOF
-    ports <app>                                     show all ports belonging to <app>
-    ports:open <app>                                open all ports belonging to <app>
-    ports:close <app>                               close all ports belonging to <app>
+
+  help | ports:help)
+    HELP=$(cat<<EOF
+    ports <app>, show all ports belonging to <app>
+    ports:open <app>, open all ports belonging to <app>
+    ports:close <app>, close all ports belonging to <app>
 EOF
+)
+    if [[ -n $DOKKU_API_VERSION ]]; then
+      echo "$HELP"
+    else
+      cat && echo "$HELP"
+    fi
+    ;;
+
+  *)
+    exit $DOKKU_NOT_IMPLEMENTED_EXIT
     ;;
 esac
 
