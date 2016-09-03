@@ -39,8 +39,8 @@ help_content
       # shellcheck disable=SC2034
       declare desc="return $PLUGIN_COMMAND_PREFIX plugin help content"
       cat<<help_list
-      -----> Ports available for playground
-             32771
+-----> Ports available for playground
+       32771
 help_list
     }
 
