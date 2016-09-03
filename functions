@@ -27,6 +27,6 @@ fn-ports-list() {
   IMAGE_NAME="$(get_deploying_app_image_name "$APP" "$IMAGE_TAG")"
   INSTANCES=$(docker ps | grep "$IMAGE_NAME" | grep -v CONTAINER | cut -d\  -f1 | tr '\n' ' ')
   for i in $INSTANCES; do
-    docker inspect "$i" | grep HostPort | cut -d\" -f4 || true
+    docker inspect --format='{{range $p, $conf := .NetworkSettings.Ports}} {{$p}} -> {{(index $conf 0).HostPort}} {{end}}' inspect "$i" | xargs | cut -d' ' -f3 || true
   done | uniq
 }
