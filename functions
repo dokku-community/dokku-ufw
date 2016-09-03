@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
 source "$PLUGIN_CORE_AVAILABLE_PATH/common/functions"
+source "$PLUGIN_AVAILABLE_PATH/proxy/functions"
 
 fn-ports-open() {
   declare APP="$1"
@@ -22,7 +23,13 @@ fn-ports-close() {
 
 fn-ports-list() {
   declare APP="$1"
-  local IMAGE_NAME IMAGE_TAG INSTANCES
+  local DOKKU_IS_APP_PROXY_ENABLED IMAGE_NAME IMAGE_TAG INSTANCES
+
+  DOKKU_IS_APP_PROXY_ENABLED="$(is_app_proxy_enabled "$APP")"
+  if [[ "$DOKKU_IS_APP_PROXY_ENABLED" == "true" ]]; then
+    dokku_log_fail "App proxy enabled, no ports exposed"
+  fi
+
   IMAGE_TAG="latest"
   IMAGE_NAME="$(get_deploying_app_image_name "$APP" "$IMAGE_TAG")"
   INSTANCES=$(docker ps | grep "$IMAGE_NAME" | grep -v CONTAINER | cut -d\  -f1 | tr '\n' ' ')
