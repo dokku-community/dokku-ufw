@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
 
-echo installing dokku-ports
 cat > /etc/sudoers.d/dokku-ufw <<EOF
 %dokku ALL=(ALL) NOPASSWD: /usr/sbin/ufw
 EOF
