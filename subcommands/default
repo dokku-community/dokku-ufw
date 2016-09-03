@@ -8,6 +8,10 @@ ports-default-cmd() {
   local cmd="ports"
   [[ "$1" == "$cmd" ]] && shift 1
   local APP="$1"; verify_app_name "$APP"
+
+  if [[ "$(fn-can-expose-ports "$APP")" == "false" ]]; then
+    dokku_log_fail "App proxy enabled, no ports exposed"
+  fi
   dokku_log_info1_quiet "Ports available for ${APP}"
   dokku_log_verbose $(fn-ports-list "$APP")
 }
