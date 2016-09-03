@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
-APP="$1"
+source "$PLUGIN_AVAILABLE_PATH/ports/functions"
 
-dokku ports:close "$APP"
+ports-pre-delete() {
+  declare APP="$1"
+  fn-ports-close "$APP"
+}
+
+ports-pre-delete "$@"

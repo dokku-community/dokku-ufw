@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+export PLUGIN_COMMAND_PREFIX="ports"

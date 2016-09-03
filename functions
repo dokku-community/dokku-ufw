@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
+source "$PLUGIN_CORE_AVAILABLE_PATH/common/functions"
+
+fn-ports-open() {
+  declare APP="$1"
+  dokku_log_info1_quiet "Opening ports"
+  for p in $(fn-ports-list "$APP") ; do
+    dokku_log_verbose_quiet "Opening port ${p}/tcp .. "
+    sudo ufw allow "${p}/tcp" > /dev/null 2>&1 && echo OK || echo ERROR;
+  done
+}
+
+fn-ports-close() {
+  declare APP="$1"
+  dokku_log_info1_quiet "Closing ports"
+  for p in $(fn-ports-list "$APP") ; do
+    dokku_log_verbose_quiet "Closing port ${p}/tcp .. "
+    sudo ufw delete allow "${p}/tcp" > /dev/null 2>&1 && echo OK || echo ERROR;
+  done
+}
+
+fn-ports-list() {
+  declare APP="$1"
+  local IMAGE_NAME IMAGE_TAG INSTANCES
+  IMAGE_TAG="latest"
+  IMAGE_NAME="$(get_deploying_app_image_name "$APP" "$IMAGE_TAG")"
+  INSTANCES=$(docker ps | grep "$IMAGE_NAME" | grep -v CONTAINER | cut -d\  -f1 | tr '\n' ' ')
+  for i in $INSTANCES; do
+    docker inspect "$i" | grep HostPort | cut -d\" -f4 || true
+  done | uniq
+}

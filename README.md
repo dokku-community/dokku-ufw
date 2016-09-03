@@ -1,4 +1,4 @@
-# dokku-ports [![Build Status](https://img.shields.io/travis/heichblatt/dokku-ports.svg?branch=master "Build Status")](https://travis-ci.org/heichblatt/dokku-ports)
+# dokku-ports [![Build Status](https://img.shields.io/travis/josegonzalez/dokku-ports.svg?branch=master "Build Status")](https://travis-ci.org/josegonzalez/dokku-ports)
 
 Open and close your dokku app's ports.
 
@@ -16,13 +16,8 @@ This plugin assumes two things:
 ## installation
 
 ```shell
-# on 0.3.x
-cd /var/lib/dokku/plugins
-git clone https://github.com/heichblatt/dokku-ports.git ports
-dokku plugins-install
-
 # on 0.4.x
-dokku plugin:install https://github.com/heichblatt/dokku-ports.git ports
+dokku plugin:install https://github.com/josegonzalez/dokku-ports.git ports
 ```
 
 ## hooks
