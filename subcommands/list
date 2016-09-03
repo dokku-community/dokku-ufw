@@ -8,7 +8,8 @@ ports-list-cmd() {
   local cmd="ports:list"
   [[ "$1" == "$cmd" ]] && shift 1
   local APP="$1"; verify_app_name "$APP"
-  fn-ports-list "$APP"
+  dokku_log_info1_quiet "Ports available for ${APP}"
+  dokku_log_verbose $(fn-ports-list "$APP")
 }
 
 ports-list-cmd "$@"
