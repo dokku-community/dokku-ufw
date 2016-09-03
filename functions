@@ -7,7 +7,11 @@ fn-ports-open() {
   declare APP="$1"
   dokku_log_info1_quiet "Opening ports"
   for p in $(fn-ports-list "$APP") ; do
-    sudo ufw allow "${p}/tcp" > /dev/null 2>&1 && dokku_log_verbose_quiet "Opened port ${p}/tcp" || dokku_log_fail "Unable to open port ${p}";
+    if sudo ufw allow "${p}/tcp" > /dev/null 2>&1; then
+      dokku_log_verbose_quiet "Opened port ${p}/tcp"
+    else
+      dokku_log_fail "Unable to open port ${p}"
+    fi
   done
 }
 
@@ -15,7 +19,11 @@ fn-ports-close() {
   declare APP="$1"
   dokku_log_info1_quiet "Closing ports"
   for p in $(fn-ports-list "$APP") ; do
-    sudo ufw delete allow "${p}/tcp" > /dev/null 2>&1 && dokku_log_verbose_quiet "Closed port ${p}/tcp" || echo dokku_log_fail "Unable to close port ${p}";
+    if sudo ufw delete allow "${p}/tcp" > /dev/null 2>&1; then
+      dokku_log_verbose_quiet "Closed port ${p}/tcp"
+    else
+      dokku_log_fail "Unable to close port ${p}"
+    fi
   done
 }
 
