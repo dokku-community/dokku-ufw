@@ -4,6 +4,10 @@ source "$PLUGIN_AVAILABLE_PATH/ports/functions"
 
 ports-post-deploy() {
   declare APP="$1"
+
+  if [[ "$(fn-can-expose-ports "$APP")" == "false" ]]; then
+    return
+  fi
   fn-ports-open "$APP"
 }
 

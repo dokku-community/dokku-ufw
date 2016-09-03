@@ -23,8 +23,7 @@ fn-ports-list() {
   declare APP="$1"
   local DOKKU_IS_APP_PROXY_ENABLED IMAGE_NAME IMAGE_TAG INSTANCES
 
-  DOKKU_IS_APP_PROXY_ENABLED="$(is_app_proxy_enabled "$APP")"
-  if [[ "$DOKKU_IS_APP_PROXY_ENABLED" == "true" ]]; then
+  if [[ "$(fn-can-expose-ports "$APP")" == "false" ]]; then
     dokku_log_fail "App proxy enabled, no ports exposed"
   fi
 
@@ -34,4 +33,17 @@ fn-ports-list() {
   for i in $INSTANCES; do
     docker inspect --format='{{range $p, $conf := .NetworkSettings.Ports}} {{$p}} -> {{(index $conf 0).HostPort}} {{end}}' "$i" | xargs | cut -d' ' -f3 || true
   done | uniq
+}
+
+fn-can-expose-ports() {
+  declare APP="$1"
+  local CAN_EXPOSE_PORTS DOKKU_IS_APP_PROXY_ENABLED
+  CAN_EXPOSE_PORTS=true
+  DOKKU_IS_APP_PROXY_ENABLED="$(is_app_proxy_enabled "$APP")"
+
+  if [[ "$DOKKU_IS_APP_PROXY_ENABLED" == "true" ]]; then
+    CAN_EXPOSE_PORTS=false
+  fi
+
+  echo "$CAN_EXPOSE_PORTS"
 }
