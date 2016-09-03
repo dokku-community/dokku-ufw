@@ -31,6 +31,7 @@ fn-ports-list() {
   IMAGE_NAME="$(get_deploying_app_image_name "$APP" "$IMAGE_TAG")"
   INSTANCES=$(docker ps | grep "$IMAGE_NAME" | grep -v CONTAINER | cut -d\  -f1 | tr '\n' ' ')
   for i in $INSTANCES; do
+    # shellcheck disable=SC2016
     docker inspect --format='{{range $p, $conf := .NetworkSettings.Ports}} {{$p}} -> {{(index $conf 0).HostPort}} {{end}}' "$i" | xargs | cut -d' ' -f3 || true
   done | uniq
 }
