@@ -31,11 +31,11 @@ This plugin provides hooks:
 
 ```shell
 # Show all ports belonging to app
-dokku ports <app>
+dokku ports:list <app>
 
 # Close all ports belonging to app
-ports:close <app>
+dokku ports:close <app>
 
 # Open all ports belonging to app
-ports:open <app>
+dokku ports:open <app>
 ```
