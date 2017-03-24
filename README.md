@@ -1,4 +1,4 @@
-# dokku-ports [![Build Status](https://img.shields.io/travis/josegonzalez/dokku-ports.svg?branch=master "Build Status")](https://travis-ci.org/josegonzalez/dokku-ports)
+# dokku-ports [![Build Status](https://img.shields.io/travis/dokku-community/dokku-ports.svg?branch=master "Build Status")](https://travis-ci.org/josegonzalez/dokku-ports)
 
 Open and close your dokku app's ports.
 
