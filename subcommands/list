@@ -1,19 +1,19 @@
 #!/usr/bin/env bash
 set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
 source "$PLUGIN_CORE_AVAILABLE_PATH/common/functions"
-source "$PLUGIN_AVAILABLE_PATH/ports/functions"
+source "$PLUGIN_AVAILABLE_PATH/ufw/functions"
 
-ports-list-cmd() {
+ufw-list-cmd() {
   declare desc="show all ports belonging to the app"
-  local cmd="ports:list"
+  local cmd="ufw:list"
   [[ "$1" == "$cmd" ]] && shift 1
   local APP="$1"; verify_app_name "$APP"
 
-  if [[ "$(fn-can-expose-ports "$APP")" == "false" ]]; then
+  if [[ "$(fn-ufw-can-expose-ports "$APP")" == "false" ]]; then
     dokku_log_fail "App proxy enabled, no ports exposed"
   fi
   dokku_log_info1_quiet "Ports available for ${APP}"
-  dokku_log_verbose $(fn-ports-list "$APP")
+  dokku_log_verbose $(fn-ufw-list "$APP")
 }
 
-ports-list-cmd "$@"
+ufw-list-cmd "$@"

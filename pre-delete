@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
-source "$PLUGIN_AVAILABLE_PATH/ports/functions"
+source "$PLUGIN_AVAILABLE_PATH/ufw/functions"
 
-ports-pre-delete() {
+ufw-pre-delete() {
   declare APP="$1"
 
-  if [[ "$(fn-can-expose-ports "$APP")" == "false" ]]; then
+  if [[ "$(fn-ufw-can-expose-ports "$APP")" == "false" ]]; then
     return
   fi
-  fn-ports-close "$APP"
+  fn-ufw-close "$APP"
 }
 
-ports-pre-delete "$@"
+ufw-pre-delete "$@"

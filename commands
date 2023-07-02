@@ -21,7 +21,7 @@ case "$1" in
 
   $PLUGIN_COMMAND_PREFIX:open)
     "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/subcommands/open" "$@"
-    fn-ports-open "$APP"
+    fn-ufw-open "$APP"
     ;;
 
   help | $PLUGIN_COMMAND_PREFIX:help)
@@ -47,7 +47,7 @@ help_list
     if [[ $1 = "$PLUGIN_COMMAND_PREFIX:help" ]] ; then
       echo -e "Usage: dokku $PLUGIN_COMMAND_PREFIX[:COMMAND] <app>"
       echo ''
-      echo "Manage open application ports."
+      echo "Manage open application ports via ufw."
       echo ''
       echo 'Example:'
       echo ''
@@ -60,7 +60,7 @@ help_list
       help_content_func
     else
       cat<<help_desc
-    $PLUGIN_COMMAND_PREFIX, Plugin for managing open ports
+    $PLUGIN_COMMAND_PREFIX, Plugin for managing open ports via ufw
 help_desc
     fi
     ;;

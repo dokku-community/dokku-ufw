@@ -1,6 +1,6 @@
-# dokku-ports [![Build Status](https://img.shields.io/travis/dokku-community/dokku-ports.svg?branch=master "Build Status")](https://travis-ci.org/josegonzalez/dokku-ports)
+# dokku-ufw [![Build Status](https://img.shields.io/travis/dokku-community/dokku-ufw.svg?branch=master "Build Status")](https://travis-ci.org/josegonzalez/dokku-ufw)
 
-Open and close your dokku app's ports.
+Open and close your dokku app's ports via ufw.
 
 Sometimes you just can't use the usual virtual host-based configuration of dokku, thus needing another way to access the ports used by your applications.
 This plugin assumes two things:
@@ -17,7 +17,7 @@ This plugin assumes two things:
 
 ```shell
 # on 0.4.x
-dokku plugin:install https://github.com/josegonzalez/dokku-ports.git ports
+dokku plugin:install https://github.com/josegonzalez/dokku-ufw.git ufw
 ```
 
 ## hooks
@@ -31,11 +31,11 @@ This plugin provides hooks:
 
 ```shell
 # Show all ports belonging to app
-dokku ports:list <app>
+dokku ufw:list <app>
 
 # Close all ports belonging to app
-dokku ports:close <app>
+dokku ufw:close <app>
 
 # Open all ports belonging to app
-dokku ports:open <app>
+dokku ufw:open <app>
 ```

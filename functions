@@ -3,10 +3,10 @@ set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
 source "$PLUGIN_CORE_AVAILABLE_PATH/common/functions"
 source "$PLUGIN_AVAILABLE_PATH/proxy/functions"
 
-fn-ports-open() {
+fn-ufw-open() {
   declare APP="$1"
   dokku_log_info1_quiet "Opening ports"
-  for p in $(fn-ports-list "$APP") ; do
+  for p in $(fn-ufw-list "$APP") ; do
     if sudo ufw allow "${p}/tcp" > /dev/null 2>&1; then
       dokku_log_verbose_quiet "Opened port ${p}/tcp"
     else
@@ -15,10 +15,10 @@ fn-ports-open() {
   done
 }
 
-fn-ports-close() {
+fn-ufw-close() {
   declare APP="$1"
   dokku_log_info1_quiet "Closing ports"
-  for p in $(fn-ports-list "$APP") ; do
+  for p in $(fn-ufw-list "$APP") ; do
     if sudo ufw delete allow "${p}/tcp" > /dev/null 2>&1; then
       dokku_log_verbose_quiet "Closed port ${p}/tcp"
     else
@@ -27,11 +27,11 @@ fn-ports-close() {
   done
 }
 
-fn-ports-list() {
+fn-ufw-list() {
   declare APP="$1"
   local DOKKU_IS_APP_PROXY_ENABLED IMAGE_NAME IMAGE_TAG INSTANCES
 
-  if [[ "$(fn-can-expose-ports "$APP")" == "false" ]]; then
+  if [[ "$(fn-ufw-can-expose-ports "$APP")" == "false" ]]; then
     dokku_log_fail "App proxy enabled, no ports exposed"
   fi
 
@@ -44,7 +44,7 @@ fn-ports-list() {
   done | uniq
 }
 
-fn-can-expose-ports() {
+fn-ufw-can-expose-ports() {
   declare APP="$1"
   local CAN_EXPOSE_PORTS DOKKU_IS_APP_PROXY_ENABLED
   CAN_EXPOSE_PORTS=true
