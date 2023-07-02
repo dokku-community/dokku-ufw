@@ -1,4 +1,4 @@
 [plugin]
 description = "open and close your dokku app's ports via ufw"
-version = "1.0.0"
+version = "1.1.0"
 [plugin.config]
